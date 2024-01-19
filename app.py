@@ -25,7 +25,10 @@ def create_task():
   taks_id_control += 1
   tasks_db.append(new_task)
   
-  return jsonify({'message': 'New task created.'})
+  return jsonify({
+    'message': 'New task created.', 
+    "id": new_task.id
+  })
 
 @app.route('/tasks/<int:id>', methods=['GET'])
 def show(id):
@@ -49,7 +52,13 @@ def update(id):
   task.description = data['description'] or ''
   task.completed = data['completed']
 
-  return jsonify({"message": "Task updated."})
+  return jsonify({
+      "message": "Task updated.",
+      "id": task.id,
+      "title": task.title,
+      "description": task.description,
+      "completed": task.completed
+    })
 
 @app.route('/tasks/<int:id>', methods=['DELETE'])
 def destroy(id):
